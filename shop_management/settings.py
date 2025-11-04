@@ -25,7 +25,11 @@ SECRET_KEY = 'django-insecure-7g*9d-f#e&%(^!k@o$e-6cjf=02@j^84ikqt=5f$c1ijp_ui1o
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+# ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['shop-management-v2.onrender.com', 'localhost', '127.0.0.1']
+CSRF_TRUSTED_ORIGINS = [
+    'https://shop-management-v2.onrender.com'
+]
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'dashboard'
 LOGOUT_REDIRECT_URL = 'login'
