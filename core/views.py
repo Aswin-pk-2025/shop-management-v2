@@ -200,6 +200,7 @@ def dashboard(request):
 
     return render(request, 'core/dashboard.html', context)
 
+@login_required
 def products(request):
     products = Product.objects.select_related('subcategory', 'subcategory__category')
     categories = Category.objects.all()
@@ -237,7 +238,7 @@ def products(request):
 # views.py
 from django.shortcuts import render
 # from .models import Product, Category, Subcategory
-
+@login_required
 def product_list_view(request):
     products = Product.objects.select_related('subcategory', 'subcategory__category')
     categories = Category.objects.all()
@@ -355,6 +356,7 @@ def delete_product(request, pk):
 #     }
 #     return render(request, 'core/vendors.html', context)
 
+@login_required
 def vendors(request, edit_vendor_id=None):
     vendor_instance = None
     editing = False
@@ -386,6 +388,7 @@ def vendors(request, edit_vendor_id=None):
     }
     return render(request, 'core/vendors.html', context)
 
+@login_required
 # 💸 Payments List
 def payments(request):
     payments = Payment.objects.select_related('vendor')
@@ -399,7 +402,7 @@ def payments(request):
 
     return render(request, 'core/payments.html', {'payments': payments, 'form': form})
 
-
+@login_required
 # 📥 Purchases
 def purchases(request):
     vendors = Vendor.objects.all()
@@ -532,6 +535,7 @@ def purchase_detail(request, purchase_id):
 
 from django.utils import timezone
 
+
 def sales(request):
     sales_qs = Sale.objects.select_related('product').all()
     fixed_sales = []
@@ -588,6 +592,7 @@ def delete_vendor(request, pk):
 
 
 
+@login_required
 # Sale Views
 def sales(request):
     form = SaleForm(request.POST or None)
@@ -657,6 +662,9 @@ def delete_payment(request, pk):
     payment = get_object_or_404(Payment, pk=pk)
     payment.delete()
     return redirect('payments')
+
+
+
 def vendor_payments(request):
     payments = Payment.objects.select_related('vendor', 'purchase', 'recorded_by').all()
     
